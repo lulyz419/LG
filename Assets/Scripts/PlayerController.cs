@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour {
     public Text scoreText;
     private float startTime;
     private int jumpsLeft = 2;
+    public AudioSource jumpSfx;
+    public AudioSource deathSfx;
+
 
 
     // Use this for initialization
@@ -29,11 +32,19 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("title");
+        }
+
         if (deathTime == -1)
         {
+            //PLAYER JUMP
 
             if (Input.GetButtonUp("Jump") && jumpsLeft > 0)
             {
+
+                //PLAYER JUMP LESS FORCE ON 2ND JUMP
 
                 if (myRigidBody.velocity.y < 0)
                 {
@@ -43,7 +54,7 @@ public class PlayerController : MonoBehaviour {
                 {
                     myRigidBody.AddForce(transform.up * playerJumpForce * 0.75f);
                 }
-
+                                
                 if (jumpsLeft == 1)
                 {
                     myRigidBody.AddForce(transform.up * playerJumpForce);
@@ -51,6 +62,8 @@ public class PlayerController : MonoBehaviour {
 
                 myRigidBody.AddForce(transform.up * playerJumpForce);
                 jumpsLeft--;
+
+                jumpSfx.Play();
             }
 
             myAnim.SetFloat("vVelocity", myRigidBody.velocity.y);
@@ -58,6 +71,8 @@ public class PlayerController : MonoBehaviour {
         }
         else
         {
+            //RELOAD LEVEL
+
             if (Time.time > deathTime + 2)
             {
                 SceneManager.LoadScene("runner");
@@ -68,6 +83,9 @@ public class PlayerController : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+        //PLAYER DEATH ON COLLISION WITH ENEMY
+
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             foreach (PrefabSpawner spawner in FindObjectsOfType<PrefabSpawner>())
@@ -85,6 +103,9 @@ public class PlayerController : MonoBehaviour {
             myRigidBody.velocity = Vector2.zero;
             myRigidBody.AddForce(transform.up * playerJumpForce);
             myCollider.enabled = false;
+
+            deathSfx.Play();
+
         }
 
         else if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
