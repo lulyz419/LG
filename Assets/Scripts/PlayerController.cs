@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour {
     private int jumpsLeft = 2;
     public AudioSource jumpSfx;
     public AudioSource deathSfx;
+    public AudioSource collectSfx;
+    public GameObject sexy;
 
 
 
@@ -81,6 +83,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+   
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
@@ -113,6 +116,11 @@ public class PlayerController : MonoBehaviour {
             jumpsLeft = 2;
         }
 
-
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Collectible"))
+        {
+            Debug.Log("eh que he cogido a la tia");
+            collectSfx.Play();
+            Destroy(gameObject.GetComponent("sexy"));
+        }
     }
 }
