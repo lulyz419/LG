@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour {
     public AudioSource deathSfx;
     public AudioSource collectSfx;
     public GameObject sexy;
+    public GameObject sexy2;
 
 
 
@@ -117,10 +118,17 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Collectible"))
+            
         {
             Debug.Log("eh que he cogido a la tia");
             collectSfx.Play();
             Destroy(gameObject.GetComponent("sexy"));
+            Destroy(gameObject.GetComponent("sexy2"));
+           if (myAnim.GetCurrentAnimatorStateInfo (0).IsName("run"))
+            {
+                myAnim.SetTrigger("getSexy");
+            }
+        
         }
     }
 }
