@@ -123,12 +123,13 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("eh que he cogido a la tia");
             collectSfx.Play();
             Destroy(gameObject.GetComponent("sexy"));
-            Destroy(gameObject.GetComponent("sexy2"));
-           if (myAnim.GetCurrentAnimatorStateInfo (0).IsName("run"))
+            if (myAnim.GetCurrentAnimatorStateInfo (0).IsName("run"))
             {
                 myAnim.SetTrigger("getSexy");
             }
         
         }
+
+        
     }
 }
