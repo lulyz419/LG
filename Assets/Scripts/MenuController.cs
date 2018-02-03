@@ -7,11 +7,12 @@ public class MenuController : MonoBehaviour {
 
     public GameObject audioOnIcon;
     public GameObject audioOffIcon;
-    
+     
 	// Use this for initialization
 	void Start () {
         SetSoudState();
 
+       
     }
 	
 	// Update is called once per frame
@@ -23,6 +24,11 @@ public class MenuController : MonoBehaviour {
         }
 
 	}
+
+    public void SkipIntro(string name)
+    {
+        SceneManager.LoadScene(name);
+    }
 
     public void StartGame()
     {
